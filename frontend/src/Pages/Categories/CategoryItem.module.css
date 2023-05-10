@@ -1,0 +1,27 @@
+.actions-list {
+  display: grid;
+  grid-template-areas: "a a" "b c";
+  gap: 1rem;
+}
+
+.actions-list button:nth-child(1) {
+  grid-area: a;
+}
+
+.actions-list button:nth-child(2) {
+  grid-area: b;
+}
+
+.actions-list button:nth-child(3) {
+  grid-area: c;
+}
+
+.card-body {
+  display: grid;
+}
+
+.list-group-item a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
