@@ -4,7 +4,7 @@ class Token {
   readonly id;
   readonly token: string;
   userId: string;
-  createdAt: Date;
+  readonly createdAt: Date;
 
   constructor(userId: string) {
     this.id = randomUUID();

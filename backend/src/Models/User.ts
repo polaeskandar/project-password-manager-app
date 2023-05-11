@@ -4,7 +4,7 @@ class User {
   readonly id: string;
   username: string;
   password: string;
-  createdAt: Date;
+  readonly createdAt: Date;
 
   constructor(username: string, password: string) {
     this.id = randomUUID();

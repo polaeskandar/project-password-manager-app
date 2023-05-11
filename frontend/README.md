@@ -1,4 +1,5 @@
 - Add some validation
-- Add database
 - Refactor code
+- Connect to backend
+- Add edit and delete to passwords and categories
 - Add filtering
