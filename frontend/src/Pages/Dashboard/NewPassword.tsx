@@ -1,5 +1,6 @@
 import { useState, FormEvent, ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { encode } from "base-64";
 
 import { RootState } from "../../Store";
 import { capitalize } from "../../Helpers/strings";
@@ -44,7 +45,7 @@ const NewPassword = () => {
       newPassword({
         id: passwords[passwords.length - 1].id + 1,
         userName: enteredUsername,
-        encryptedPassword: enteredPassword,
+        encryptedPassword: encode(enteredPassword),
         app: enteredApplication,
         categoryId: enteredCategory,
         description: enteredDescription,

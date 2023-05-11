@@ -1,0 +1,19 @@
+.uncategorized-passwords-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 2rem;
+  gap: 2rem;
+}
+
+@media screen and (max-width: 1024px) {
+  .uncategorized-passwords-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .uncategorized-passwords-list {
+    grid-template-columns: 1fr;
+  }
+}
+

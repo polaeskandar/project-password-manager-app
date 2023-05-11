@@ -25,6 +25,14 @@ const PasswordsList = () => {
     if (searchFor) filteredArray = passwordsArray.filter((password) => password.app.includes(searchFor));
     else filteredArray = passwordsArray;
 
+    if (filteredArray.length === 0) {
+      return (
+        <div className="card mb-3 border-dark">
+          <div className="card-body text-center">No found passwords!</div>
+        </div>
+      );
+    }
+
     return filteredArray.map((password: Password) => {
       const link = `/password/${password.id}`;
       const heading = capitalize(password.app);

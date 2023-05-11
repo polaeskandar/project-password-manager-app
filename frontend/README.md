@@ -1,5 +1,4 @@
-- Add encryption to passwords (Base64)
-- Add editing and deleting
+- Add some validation
 - Add database
 - Refactor code
 - Add filtering

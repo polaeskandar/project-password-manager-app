@@ -40,15 +40,10 @@ const CategoryItem = ({ category }: CategoryProps) => {
 
         <div className={classes["actions-list"]}>
           <button className="btn btn-light" onClick={() => setShowPasswords(!showPasswords)} disabled={!assignedPasswords.length}>
-            {assignedPasswords.length > 0 ? (
-              <>
-                <i className="fa-solid fa-eye me-1"></i> View Assigned Passwords
-              </>
-            ) : (
-              <>
-                <i className="fa-solid fa-eye-slash me-1"></i> No Assigned Passwords
-              </>
-            )}
+            <i className={`fa-solid fa-eye${assignedPasswords.length === 0 || showPasswords ? "-slash" : ""} me-1`}></i>
+            {assignedPasswords.length === 0 && "No assigned passwords"}
+            {assignedPasswords.length > 0 && !showPasswords && "View assigned passwords"}
+            {assignedPasswords.length > 0 && showPasswords && "Hide assigned passwords"}
           </button>
           <button className="btn btn-dark">
             <i className="fa-solid fa-pen-to-square me-1"></i> Edit

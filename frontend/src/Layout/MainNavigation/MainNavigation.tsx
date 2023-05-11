@@ -38,6 +38,13 @@ const MainNavigation = () => {
             )}
             {user && (
               <li className="nav-item">
+                <NavLink className="nav-link" to="/uncategorized">
+                  <i className="fa-solid fa-circle-question"></i> Uncategorized
+                </NavLink>
+              </li>
+            )}
+            {user && (
+              <li className="nav-item">
                 <button onClick={logoutHandler} className="nav-link">
                   <i className="fa-solid fa-arrow-right-from-bracket me-1"></i> Logout
                 </button>
