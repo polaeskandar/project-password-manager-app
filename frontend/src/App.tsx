@@ -1,15 +1,31 @@
+import { useEffect } from "react";
 import { RouterProvider } from "react-router-dom";
-import { Provider } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
+import { CustomThunkDispatch, RootState } from "./Store";
+import { getPasswords } from "./Store/actions/password";
+import { getCategories } from "./Store/actions/category";
+import User from "./Classes/User";
 import router from "./Router";
-import store from "./Store";
+
+let initial = true;
 
 function App() {
-  return (
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
-  );
+  const dispatch: CustomThunkDispatch = useDispatch();
+  const user: User | undefined = useSelector((state: RootState) => state.auth.user);
+
+  useEffect(() => {
+    if (initial) {
+      initial = false;
+      return;
+    }
+
+    if (!user) return;
+    dispatch(getCategories(user));
+    dispatch(getPasswords(user));
+  }, []);
+
+  return <RouterProvider router={router} />;
 }
 
 export default App;

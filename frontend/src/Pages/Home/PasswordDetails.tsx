@@ -7,7 +7,7 @@ import User from "../../Classes/User";
 import classes from "./PasswordDetails.module.css";
 import { RootState } from "../../Store";
 import { capitalize } from "../../Helpers/strings";
-import { changeUserName, changePassword, changeApplication, changeCategory, changeDescription } from "../../Store/passwords";
+import { changeUserName, changePassword, changeApplication, changeCategory, changeDescription } from "../../Store/password";
 
 const PasswordDetails = () => {
   const { id } = useParams();

@@ -1,16 +1,18 @@
+import { randomUUID } from "crypto";
+
 class Category {
-  readonly id: string;
+  readonly id?: string;
   name: string;
   description: string;
   userId: string;
-  createdAt: Date;
+  createdAt?: Date;
 
-  constructor(id: string, name: string, description: string, userId: string, createdAt: Date) {
-    this.id = id;
+  constructor(name: string, description: string, userId: string) {
+    this.id = randomUUID();
     this.name = name;
     this.description = description;
     this.userId = userId;
-    this.createdAt = createdAt;
+    this.createdAt = new Date();
   }
 }
 

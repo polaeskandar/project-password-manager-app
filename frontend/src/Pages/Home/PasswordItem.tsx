@@ -6,7 +6,7 @@ import { capitalize } from "../../Helpers/strings";
 import { formatDate } from "../../Helpers/date";
 import Password from "../../Classes/Password";
 import Category from "../../Classes/Category";
-import { deletePassword } from "../../Store/passwords";
+import { deletePassword } from "../../Store/password";
 
 interface PasswordItemProps {
   password: Password;

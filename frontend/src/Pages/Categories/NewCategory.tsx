@@ -1,19 +1,20 @@
 import { useState, ChangeEvent, MouseEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { randomUUID } from "crypto";
+import { useNavigate } from "react-router-dom";
 
 import classes from "./NewCategory.module.css";
 import User from "../../Classes/User";
-import { newCategory } from "../../Store/category";
-import { RootState } from "../../Store";
+import { CustomThunkDispatch, RootState } from "../../Store";
+import { createCategory } from "../../Store/actions/category";
 
 const AddNewCategory = () => {
+  const navigate = useNavigate();
+  const dispatch: CustomThunkDispatch = useDispatch();
   const user: User | undefined = useSelector((state: RootState) => state.auth.user);
-  const categories = useSelector((state: RootState) => state.categories.categories.filter((category) => category.userId === user?.id));
-
-  const dispatch = useDispatch();
   const [categoryName, setCategoryName] = useState("");
   const [categoryDescription, setCategoryDescription] = useState("");
+
+  if (!user) return <>Unexpected Error!</>;
 
   const changeNameHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setCategoryName(event.target.value);
@@ -25,22 +26,14 @@ const AddNewCategory = () => {
 
   const saveHandler = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    dispatch(
-      newCategory({
-        id: `id-${Math.random()}`,
-        name: categoryName,
-        description: categoryDescription,
-        userId: user!.id,
-        createdAt: new Date(),
-      })
-    );
-
+    dispatch(createCategory({ name: categoryName, description: categoryDescription, userId: user.id }, user.token));
     setCategoryName("");
     setCategoryDescription("");
+    navigate("..");
   };
 
   return (
-    <form className="card">
+    <form className="card mb-3">
       <div className="card-body position-relative">
         <i className={`${classes["close-icon"]} fa-solid fa-xmark position-absolute text-secondary`}></i>
         <div className="mb-3">

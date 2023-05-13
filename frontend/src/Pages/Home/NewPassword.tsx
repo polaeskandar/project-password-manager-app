@@ -5,7 +5,7 @@ import { encode } from "base-64";
 import { RootState } from "../../Store";
 import { capitalize } from "../../Helpers/strings";
 import User from "../../Classes/User";
-import { newPassword } from "../../Store/passwords";
+import { newPassword } from "../../Store/password";
 
 const NewPassword = () => {
   const [enteredUsername, setEnteredUsername] = useState<string>("");

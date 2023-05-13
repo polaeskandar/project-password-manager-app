@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import classes from "./Uncategorized.module.css";
 import { RootState } from "../../Store";
-import { changeCategory } from "../../Store/passwords";
+import { changeCategory } from "../../Store/password";
 import { capitalize } from "../../Helpers/strings";
 import User from "../../Classes/User";
 

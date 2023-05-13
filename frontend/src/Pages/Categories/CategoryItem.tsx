@@ -29,19 +29,19 @@ const CategoryItem = ({ category }: CategoryProps) => {
 
   const deleteHandler = () => {
     setChangedData(true);
-    dispatch(deleteCategory({ id: category.id }));
+    dispatch(deleteCategory({ id: category.id! }));
   };
 
   const nameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setChangedData(true);
     setCategoryName(event.target.value);
-    dispatch(renameCategory({ id: category.id, newName: categoryName }));
+    dispatch(renameCategory({ id: category.id!, newName: categoryName }));
   };
 
   const descriptionChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setChangedData(true);
     setCategoryDescription(event.target.value);
-    dispatch(editCategoryDescription({ id: category.id, newDescription: categoryDescription }));
+    dispatch(editCategoryDescription({ id: category.id!, newDescription: categoryDescription }));
   };
 
   const clickHandler = () => {

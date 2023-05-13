@@ -10,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "prettier": {
-    "printWidth": 200
+    "printWidth": 120
   }
 }
