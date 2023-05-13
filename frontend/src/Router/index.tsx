@@ -2,11 +2,12 @@ import { createBrowserRouter } from "react-router-dom";
 
 import Root from "../Layout/Root/Root";
 import Error from "../Layout/Error/Error";
-import Dashboard from "../Pages/Dashboard/Dashboard";
+import Dashboard from "../Pages/Home/Dashboard";
 import Categories from "../Pages/Categories/Categories";
-import PasswordDetails from "../Pages/Dashboard/PasswordDetails";
-import NewPassword from "../Pages/Dashboard/NewPassword";
-import Uncategorized from "../Pages/Dashboard/Uncategorized";
+import PasswordDetails from "../Pages/Home/PasswordDetails";
+import NewPassword from "../Pages/Home/NewPassword";
+import Uncategorized from "../Pages/Categories/Uncategorized";
+import NewCategory from "../Pages/Categories/NewCategory";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
           { path: "/password/new", element: <NewPassword /> },
         ],
       },
-      { path: "/categories", element: <Categories /> },
+      { path: "/categories", element: <Categories />, children: [{ path: "/categories/new", element: <NewCategory /> }] },
       { path: "/uncategorized", element: <Uncategorized /> },
     ],
   },

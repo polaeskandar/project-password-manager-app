@@ -1,5 +1,6 @@
 - Add some validation
 - Refactor code
 - Connect to backend
-- Add edit and delete to passwords and categories
-- Add filtering
+
+- Additional: Add filtering
+- Additional: Copy to clipboard

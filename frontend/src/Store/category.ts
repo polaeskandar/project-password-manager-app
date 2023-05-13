@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import Category from "../Classes/Category";
 
 export interface CategoryState {
@@ -17,8 +17,25 @@ const initialState: CategoryState = {
 const categorySlice = createSlice({
   name: "categories",
   initialState,
-  reducers: {},
+  reducers: {
+    renameCategory(state, action: PayloadAction<{ id: number; newName: string }>) {
+      const category = state.categories.find((category) => category.id === action.payload.id);
+      if (!category) return;
+      else category.name = action.payload.newName;
+    },
+    editCategoryDescription(state, action: PayloadAction<{ id: number; newDescription: string }>) {
+      const category = state.categories.find((category) => category.id === action.payload.id);
+      if (!category) return;
+      else category.description = action.payload.newDescription;
+    },
+    newCategory(state, action: PayloadAction<Category>) {
+      state.categories.push(action.payload);
+    },
+    deleteCategory(state, action: PayloadAction<{ id: number }>) {
+      state.categories = state.categories.filter((category) => category.id !== action.payload.id);
+    },
+  },
 });
 
-export const {} = categorySlice.actions;
+export const { renameCategory, editCategoryDescription, newCategory, deleteCategory } = categorySlice.actions;
 export default categorySlice.reducer;

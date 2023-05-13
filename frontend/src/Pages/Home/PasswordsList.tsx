@@ -1,13 +1,12 @@
 import { ChangeEvent, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store";
 
 import classes from "./PasswordsList.module.css";
 import Password from "../../Classes/Password";
 import Category from "../../Classes/Category";
-import { formatDate } from "../../Helpers/date";
-import { capitalize } from "../../Helpers/strings";
+import PasswordItem from "./PasswordItem";
 
 const PasswordsList = () => {
   const authenticatedUser = useSelector((state: RootState) => state.auth.user);
@@ -34,24 +33,8 @@ const PasswordsList = () => {
     }
 
     return filteredArray.map((password: Password) => {
-      const link = `/password/${password.id}`;
-      const heading = capitalize(password.app);
-      const date = formatDate(password.createdAt);
-      const category = categoriesList.find((category) => category.id === password.categoryId)?.name.toUpperCase();
-
-      return (
-        <NavLink className={({ isActive }) => `card ${isActive ? "border-black" : ""} mb-3`} to={link} key={password.id}>
-          <div className={`card-header ${classes["card-header"]}`}>
-            <span>{heading}</span>
-            <span className="text-secondary">{date}</span>
-          </div>
-          <div className="card-body">
-            <h5 className="card-title">{heading}'s Account Password</h5>
-            <p className="card-text">{password.description}</p>
-            <span className="badge text-bg-dark">{category}</span>
-          </div>
-        </NavLink>
-      );
+      const category: Category | undefined = categoriesList.find((category) => category.id === password.categoryId);
+      return <PasswordItem password={password} category={category} key={password.id} />;
     });
   };
 

@@ -67,7 +67,11 @@ const PasswordDetails = () => {
   };
 
   const clickHandler = () => {
-    if (changedData) console.log("Sending some request...");
+    if (changedData) {
+      console.log("Sending some request...");
+      setChangedData(false);
+    }
+
     setCanEdit(!canEdit);
   };
 

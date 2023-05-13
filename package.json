@@ -1,0 +1,15 @@
+{
+  "name": "password-manager-tool",
+  "version": "1.0.0",
+  "description": "![App Screenshot](./screenshots/001.png)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "prettier": {
+    "printWidth": 200
+  }
+}

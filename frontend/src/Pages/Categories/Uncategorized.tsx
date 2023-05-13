@@ -10,9 +10,15 @@ import User from "../../Classes/User";
 const Uncategorized = () => {
   const dispatch = useDispatch();
   const [addedToCategory, setAddedToCategory] = useState(false);
+
   const user: User | undefined = useSelector((state: RootState) => state.auth.user);
-  const passwords = useSelector((state: RootState) => state.passwords.passwords.filter((password) => password.userId === user?.id && password.categoryId === 0));
   const categories = useSelector((state: RootState) => state.categories.categories.filter((category) => category.userId === user?.id));
+  const categoriesIDs = categories.map((category) => category.id);
+  const passwords = useSelector((state: RootState) => {
+    return state.passwords.passwords.filter((password) => {
+      return password.userId === user?.id && (password.categoryId === 0 || !categoriesIDs.includes(password.categoryId));
+    });
+  });
 
   if (addedToCategory) {
     setTimeout(() => setAddedToCategory(false), 5000);
@@ -36,7 +42,7 @@ const Uncategorized = () => {
 
   return (
     <>
-      {addedToCategory && <div className="alert alert-dark">Added to category!</div>}
+      {addedToCategory && <div className="alert alert-dark m-5">Added to category!</div>}
       <div className={classes["uncategorized-passwords-list"]}>
         {passwords.map((password) => (
           <div className="card" key={password.id}>

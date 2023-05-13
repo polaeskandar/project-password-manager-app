@@ -85,11 +85,16 @@ const passwordsSlice = createSlice({
       if (!password) return;
       else password.description = action.payload.newDescription;
     },
+    deletePassword(state, action: PayloadAction<{ id: number }>) {
+      const password = state.passwords.find((password) => password.id === action.payload.id);
+      if (!password) return;
+      else state.passwords = state.passwords.filter((passwordItem) => passwordItem.id !== password.id);
+    },
     newPassword(state, action: PayloadAction<Password>) {
       state.passwords.push(action.payload);
     },
   },
 });
 
-export const { changeUserName, changePassword, changeApplication, changeCategory, changeDescription, newPassword } = passwordsSlice.actions;
+export const { changeUserName, changePassword, changeApplication, changeCategory, changeDescription, deletePassword, newPassword } = passwordsSlice.actions;
 export default passwordsSlice.reducer;
