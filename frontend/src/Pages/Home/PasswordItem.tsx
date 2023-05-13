@@ -17,8 +17,8 @@ const PasswordItem = ({ password, category }: PasswordItemProps) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const link = `/password/${password.id}`;
-  const heading = capitalize(password.app);
-  const date = formatDate(password.createdAt);
+  const heading = capitalize(password.application);
+  const date = formatDate(password.createdAt as unknown as string);
 
   const deleteHandler = () => {
     dispatch(deletePassword({ id: password.id }));
@@ -46,7 +46,7 @@ const PasswordItem = ({ password, category }: PasswordItemProps) => {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id={`confirmModal-${password.id}-label`}>
-                Are you sure you want to proceed? - Deleting password for "{password.app}".
+                Are you sure you want to proceed? - Deleting password for "{password.application}".
               </h1>
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>

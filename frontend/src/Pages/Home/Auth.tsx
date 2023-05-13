@@ -26,9 +26,9 @@ const Auth = () => {
     event.preventDefault();
 
     if (mode === "login") {
-      dispatch(login({ id: 1, username: enteredUsername }));
+      dispatch(login({ id: "1", username: enteredUsername, token: "some-token" }));
     } else {
-      dispatch(register({ id: 1, username: enteredUsername }));
+      dispatch(register({ id: "1", username: enteredUsername, token: "some-token" }));
     }
   };
 

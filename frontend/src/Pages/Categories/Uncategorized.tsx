@@ -16,7 +16,7 @@ const Uncategorized = () => {
   const categoriesIDs = categories.map((category) => category.id);
   const passwords = useSelector((state: RootState) => {
     return state.passwords.passwords.filter((password) => {
-      return password.userId === user?.id && (password.categoryId === 0 || !categoriesIDs.includes(password.categoryId));
+      return password.userId === user?.id && (password.categoryId === "0" || !categoriesIDs.includes(password.categoryId));
     });
   });
 
@@ -37,7 +37,7 @@ const Uncategorized = () => {
 
   const categoryChangeHandler = (event: ChangeEvent<HTMLSelectElement>) => {
     setAddedToCategory(true);
-    dispatch(changeCategory({ id: Number(event.target.parentElement?.dataset.id), newCategory: Number(event.target.value) }));
+    dispatch(changeCategory({ id: event.target.parentElement!.dataset.id!, newCategory: event.target.value }));
   };
 
   return (
@@ -47,7 +47,7 @@ const Uncategorized = () => {
         {passwords.map((password) => (
           <div className="card" key={password.id}>
             <div className="card-body">
-              <h5 className="card-title">{capitalize(password.app)}</h5>
+              <h5 className="card-title">{capitalize(password.application)}</h5>
               <p className="card-text">{password.description}</p>
               <div className="mb-3" data-id={password.id}>
                 <label htmlFor="category" className="form-label">

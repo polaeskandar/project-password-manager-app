@@ -5,7 +5,7 @@ import { tokenCheck } from "../Middleware/tokenCheck";
 
 const categoryRoutes: Router = Router();
 
-categoryRoutes.get("/", tokenCheck, getCategory);
+categoryRoutes.get("/:userId", getCategory);
 categoryRoutes.post("/", tokenCheck, createCategory);
 categoryRoutes.patch("/:id", tokenCheck, editCategory);
 categoryRoutes.delete("/:id", tokenCheck, deleteCategory);

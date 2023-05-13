@@ -4,13 +4,13 @@ import Databases from "../Enums/databases";
 import { addToDatabase, checkEntryExistence, getDatabase, setDatabase } from "../Helpers/database";
 import Category from "../Models/Category";
 
-const checkCategoryExistence = (name: string, userId: number): Category | undefined => {
+const checkCategoryExistence = (name: string, userId: string): Category | undefined => {
   return checkEntryExistence(Databases.USERS, (category: Category) => category.name === name && category.userId === userId);
 };
 
 export const getCategory = (req: Request, res: Response) => {
-  const { user_id } = req.body;
-  const categories = getDatabase(Databases.CATEGORIES, (category: Category) => category.userId === user_id);
+  const { userId } = req.params;
+  const categories = getDatabase(Databases.CATEGORIES, (category: Category) => category.userId === userId);
 
   res.status(200).send({
     msg: `${categories.length} categories found!`,

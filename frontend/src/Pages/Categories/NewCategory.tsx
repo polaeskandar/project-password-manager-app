@@ -1,5 +1,6 @@
 import { useState, ChangeEvent, MouseEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
+// import { randomUUID } from "crypto";
 
 import classes from "./NewCategory.module.css";
 import User from "../../Classes/User";
@@ -26,10 +27,11 @@ const AddNewCategory = () => {
     event.preventDefault();
     dispatch(
       newCategory({
-        id: categories[categories.length - 1].id + 1,
+        id: `id-${Math.random()}`,
         name: categoryName,
         description: categoryDescription,
         userId: user!.id,
+        createdAt: new Date(),
       })
     );
 

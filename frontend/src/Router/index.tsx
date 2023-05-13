@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 import Root from "../Layout/Root/Root";
 import Error from "../Layout/Error/Error";
-import Dashboard from "../Pages/Home/Dashboard";
+import Home from "../Pages/Home/Home";
 import Categories from "../Pages/Categories/Categories";
 import PasswordDetails from "../Pages/Home/PasswordDetails";
 import NewPassword from "../Pages/Home/NewPassword";
@@ -17,7 +17,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Dashboard />,
+        element: <Home />,
         children: [
           { path: "/password/:id", element: <PasswordDetails /> },
           { path: "/password/new", element: <NewPassword /> },

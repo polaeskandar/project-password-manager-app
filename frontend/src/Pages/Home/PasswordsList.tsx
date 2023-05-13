@@ -21,7 +21,7 @@ const PasswordsList = () => {
 
   const renderPasswords = (passwordsArray: Password[], searchFor: string) => {
     let filteredArray = passwordsArray;
-    if (searchFor) filteredArray = passwordsArray.filter((password) => password.app.includes(searchFor));
+    if (searchFor) filteredArray = passwordsArray.filter((password) => password.application.includes(searchFor));
     else filteredArray = passwordsArray;
 
     if (filteredArray.length === 0) {

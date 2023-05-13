@@ -8,9 +8,9 @@ const checkPasswordExistence = (app: string, userId: string): Password | undefin
   return checkEntryExistence(Databases.USERS, (password: Password) => password.application === app && password.userId === userId);
 };
 
-export const getPassword = (req: Request, res: Response) => {
-  const { user_id } = req.body;
-  const passwords = getDatabase(Databases.PASSWORDS, (password: Password) => password.userId === user_id);
+export const getPasswords = (req: Request, res: Response) => {
+  const { userId } = req.params;
+  const passwords = getDatabase(Databases.PASSWORDS, (password: Password) => password.userId === userId);
 
   res.status(200).send({
     msg: `${passwords.length} passwords found!`,
@@ -18,7 +18,7 @@ export const getPassword = (req: Request, res: Response) => {
   });
 };
 
-export const createPassword = (req: Request, res: Response) => {
+export const createPasswords = (req: Request, res: Response) => {
   const { application, username, password, description, category_id, user_id } = req.body;
   const passwordExists = checkPasswordExistence(application, user_id);
 
@@ -35,7 +35,7 @@ export const createPassword = (req: Request, res: Response) => {
   });
 };
 
-export const editPassword = (req: Request, res: Response) => {
+export const editPasswords = (req: Request, res: Response) => {
   const { id } = req.params;
   const { application, username, password, description, category_id, user_id } = req.body;
 
@@ -63,7 +63,7 @@ export const editPassword = (req: Request, res: Response) => {
   });
 };
 
-export const deletePassword = (req: Request, res: Response) => {
+export const deletePasswords = (req: Request, res: Response) => {
   const { id } = req.params;
   const { user_id } = req.body;
 

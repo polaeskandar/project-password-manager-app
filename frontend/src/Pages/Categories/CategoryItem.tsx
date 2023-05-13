@@ -64,8 +64,8 @@ const CategoryItem = ({ category }: CategoryProps) => {
             {assignedPasswords.map((password) => (
               <li className={`list-group-item ${classes["list-group-item"]}`} key={password.id}>
                 <Link to={`/password/${password.id}`}>
-                  <span>{capitalize(password.app)}</span>
-                  <span>{formatDate(password.createdAt)}</span>
+                  <span>{capitalize(password.application)}</span>
+                  <span>{formatDate(password.createdAt as unknown as string)}</span>
                 </Link>
               </li>
             ))}

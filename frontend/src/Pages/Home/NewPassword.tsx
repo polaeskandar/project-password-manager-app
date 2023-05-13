@@ -11,7 +11,7 @@ const NewPassword = () => {
   const [enteredUsername, setEnteredUsername] = useState<string>("");
   const [enteredPassword, setEnteredPassword] = useState<string>("");
   const [enteredApplication, setEnteredApplication] = useState<string>("");
-  const [enteredCategory, setEnteredCategory] = useState<number>(0);
+  const [enteredCategory, setEnteredCategory] = useState<string>("0");
   const [enteredDescription, setEnteredDescription] = useState<string>("This password is for ...");
 
   const user: User | undefined = useSelector((state: RootState) => state.auth.user);
@@ -32,7 +32,7 @@ const NewPassword = () => {
   };
 
   const changeCategoryHandler = (event: ChangeEvent<HTMLSelectElement>) => {
-    setEnteredCategory(Number(event.target.value));
+    setEnteredCategory(event.target.value);
   };
 
   const changeDescriptionHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -46,7 +46,7 @@ const NewPassword = () => {
         id: passwords[passwords.length - 1].id + 1,
         userName: enteredUsername,
         encryptedPassword: encode(enteredPassword),
-        app: enteredApplication,
+        application: enteredApplication,
         categoryId: enteredCategory,
         description: enteredDescription,
         createdAt: new Date(),
@@ -57,7 +57,7 @@ const NewPassword = () => {
     setEnteredUsername("");
     setEnteredPassword("");
     setEnteredApplication("");
-    setEnteredCategory(0);
+    setEnteredCategory("0");
     setEnteredDescription("");
   };
 

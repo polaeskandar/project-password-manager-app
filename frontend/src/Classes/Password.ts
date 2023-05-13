@@ -1,17 +1,17 @@
 class Password {
-  readonly id: number;
-  categoryId: number;
-  app: string;
+  readonly id: string;
+  categoryId: string;
+  application: string;
   description: string;
   userName: string;
   encryptedPassword: string;
-  userId: number;
+  userId: string;
   createdAt: Date;
 
-  constructor(id: number, categoryId: number, app: string, description: string, userName: string, encryptedPassword: string, userId: number, createdAt: Date) {
+  constructor(id: string, categoryId: string, application: string, description: string, userName: string, encryptedPassword: string, userId: string, createdAt: Date) {
     this.id = id;
     this.categoryId = categoryId;
-    this.app = app;
+    this.application = application;
     this.description = description;
     this.userName = userName;
     this.encryptedPassword = encryptedPassword;

@@ -1,14 +1,16 @@
 class Category {
-  readonly id;
+  readonly id: string;
   name: string;
   description: string;
-  userId: number;
+  userId: string;
+  createdAt: Date;
 
-  constructor(id: number, name: string, description: string, userId: number) {
+  constructor(id: string, name: string, description: string, userId: string, createdAt: Date) {
     this.id = id;
     this.name = name;
     this.description = description;
     this.userId = userId;
+    this.createdAt = createdAt;
   }
 }
 

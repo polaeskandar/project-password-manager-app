@@ -14,7 +14,7 @@ const PasswordDetails = () => {
 
   const dispatch = useDispatch();
   const user: User | undefined = useSelector((state: RootState) => state.auth.user);
-  const password = useSelector((state: RootState) => state.passwords.passwords.find((password) => password.id === Number(id)));
+  const password = useSelector((state: RootState) => state.passwords.passwords.find((password) => password.id === id));
   const categories = useSelector((state: RootState) => state.categories.categories.filter((category) => category.userId === user?.id));
 
   const [showPassword, setShowPassword] = useState(false);
@@ -54,7 +54,7 @@ const PasswordDetails = () => {
 
   const categoryChangeHandler = (event: ChangeEvent<HTMLSelectElement>) => {
     setChangedData(true);
-    dispatch(changeCategory({ id: password.id, newCategory: Number(event.target.value) }));
+    dispatch(changeCategory({ id: password.id, newCategory: event.target.value }));
   };
 
   const descriptionChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -78,7 +78,7 @@ const PasswordDetails = () => {
   return (
     <div className="password-details">
       <div className="card">
-        <h5 className="card-header">{capitalize(password.app)}</h5>
+        <h5 className="card-header">{capitalize(password.application)}</h5>
         <div className="card-body">
           <div className="mb-3">
             <label htmlFor="username" className="form-label">
@@ -97,7 +97,7 @@ const PasswordDetails = () => {
             <label htmlFor="application" className="form-label">
               Application
             </label>
-            <input type="text" className="form-control" id="application" disabled={!canEdit} value={capitalize(password.app)} onChange={applicationChangeHandler} />
+            <input type="text" className="form-control" id="application" disabled={!canEdit} value={capitalize(password.application)} onChange={applicationChangeHandler} />
           </div>
           <div className="mb-3">
             <label htmlFor="category" className="form-label">

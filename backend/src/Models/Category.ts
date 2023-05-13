@@ -4,14 +4,15 @@ interface CategoryConstructorParams {
   id?: string;
   name: string;
   description: string;
-  userId: number;
+  userId: string;
+  createdAt?: Date;
 }
 
 class Category {
   readonly id;
   name: string;
   description: string;
-  userId: number;
+  userId: string;
   readonly createdAt: Date;
 
   constructor(params: CategoryConstructorParams) {

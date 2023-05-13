@@ -1,16 +1,16 @@
-.dashboard {
+.home {
   display: grid;
   grid-template-columns: 1fr 2fr;
   padding: 2rem;
   gap: 2rem;
 }
 
-.dashboard-auth {
+.auth {
   grid-template-columns: 1fr;
 }
 
 @media screen and (max-width: 992px) {
-  .dashboard {
+  .home {
     grid-template-columns: 1fr;
   }
 }
