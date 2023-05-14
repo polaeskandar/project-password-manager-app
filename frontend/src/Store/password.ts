@@ -21,12 +21,12 @@ const passwordsSlice = createSlice({
     changeUserName(state, action: PayloadAction<{ id: string; newUserName: string }>) {
       const password = state.passwords.find((password) => password.id === action.payload.id);
       if (!password) return;
-      else password.userName = action.payload.newUserName;
+      else password.username = action.payload.newUserName;
     },
     changePassword(state, action: PayloadAction<{ id: string; newPassword: string }>) {
       const password = state.passwords.find((password) => password.id === action.payload.id);
       if (!password) return;
-      else password.encryptedPassword = action.payload.newPassword;
+      else password.password = action.payload.newPassword;
     },
     changeApplication(state, action: PayloadAction<{ id: string; newApplication: string }>) {
       const password = state.passwords.find((password) => password.id === action.payload.id);
@@ -43,16 +43,13 @@ const passwordsSlice = createSlice({
       if (!password) return;
       else password.description = action.payload.newDescription;
     },
-    deletePassword(state, action: PayloadAction<{ id: string }>) {
+    removePassword(state, action: PayloadAction<{ id: string }>) {
       const password = state.passwords.find((password) => password.id === action.payload.id);
       if (!password) return;
       else state.passwords = state.passwords.filter((passwordItem) => passwordItem.id !== password.id);
     },
-    newPassword(state, action: PayloadAction<Password>) {
-      state.passwords.push(action.payload);
-    },
   },
 });
 
-export const { addToPasswords, changeUserName, changePassword, changeApplication, changeCategory, changeDescription, deletePassword, newPassword } = passwordsSlice.actions;
+export const { addToPasswords, changeUserName, changePassword, changeApplication, changeCategory, changeDescription, removePassword } = passwordsSlice.actions;
 export default passwordsSlice.reducer;

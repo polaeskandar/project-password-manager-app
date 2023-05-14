@@ -2,21 +2,22 @@ import { ChangeEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import classes from "./Uncategorized.module.css";
-import { RootState } from "../../Store";
+import { CustomThunkDispatch, RootState } from "../../Store";
 import { changeCategory } from "../../Store/password";
+import { editPassword } from "../../Store/actions/password";
 import { capitalize } from "../../Helpers/strings";
 import User from "../../Classes/User";
 
 const Uncategorized = () => {
-  const dispatch = useDispatch();
+  const dispatch: CustomThunkDispatch = useDispatch();
   const [addedToCategory, setAddedToCategory] = useState(false);
 
   const user: User | undefined = useSelector((state: RootState) => state.auth.user);
-  const categories = useSelector((state: RootState) => state.categories.categories.filter((category) => category.userId === user?.id));
+  const categories = useSelector((state: RootState) => state.categories.categories);
   const categoriesIDs = categories.map((category) => category.id);
   const passwords = useSelector((state: RootState) => {
     return state.passwords.passwords.filter((password) => {
-      return password.userId === user?.id && (password.categoryId === "0" || !categoriesIDs.includes(password.categoryId));
+      return !categoriesIDs.includes(password.categoryId);
     });
   });
 
@@ -37,7 +38,12 @@ const Uncategorized = () => {
 
   const categoryChangeHandler = (event: ChangeEvent<HTMLSelectElement>) => {
     setAddedToCategory(true);
-    dispatch(changeCategory({ id: event.target.parentElement!.dataset.id!, newCategory: event.target.value }));
+
+    const id = event.target.parentElement!.dataset.id!;
+    const password = passwords.find((category) => category.id === id)!;
+
+    dispatch(changeCategory({ id, newCategory: event.target.value }));
+    dispatch(editPassword({ ...password, categoryId: event.target.value }, user!.token));
   };
 
   return (

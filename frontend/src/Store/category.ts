@@ -27,14 +27,11 @@ const categorySlice = createSlice({
       if (!category) return;
       else category.description = action.payload.newDescription;
     },
-    // newCategory(state, action: PayloadAction<Category>) {
-    //   state.categories.push(action.payload);
-    // },
-    deleteCategory(state, action: PayloadAction<{ id: string }>) {
+    removeCategory(state, action: PayloadAction<{ id: string }>) {
       state.categories = state.categories.filter((category) => category.id !== action.payload.id);
     },
   },
 });
 
-export const { addToCategories, renameCategory, editCategoryDescription, deleteCategory } = categorySlice.actions;
+export const { addToCategories, renameCategory, editCategoryDescription, removeCategory } = categorySlice.actions;
 export default categorySlice.reducer;

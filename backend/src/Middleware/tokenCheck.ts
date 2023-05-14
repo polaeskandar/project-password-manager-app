@@ -9,9 +9,7 @@ export const tokenCheck = (req: Request, res: Response, next: NextFunction) => {
   if (!authorization) return res.status(401).send("Unauthorized!");
 
   const sentToken = authorization.split(" ")[1];
-  const { user_id } = req.body;
-
-  console.log(sentToken, user_id);
+  const user_id = req.body.user_id || req.headers["x-user-id"];
 
   const tokensDatabase: Array<Token> = getDatabase(Databases.TOKENS);
   let foundToken = false;

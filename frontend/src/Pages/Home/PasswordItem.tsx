@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 
 import classes from "./PasswordItem.module.css";
@@ -6,7 +6,10 @@ import { capitalize } from "../../Helpers/strings";
 import { formatDate } from "../../Helpers/date";
 import Password from "../../Classes/Password";
 import Category from "../../Classes/Category";
-import { deletePassword } from "../../Store/password";
+import { removePassword } from "../../Store/password";
+import { CustomThunkDispatch, RootState } from "../../Store";
+import { deletePassword } from "../../Store/actions/password";
+import User from "../../Classes/User";
 
 interface PasswordItemProps {
   password: Password;
@@ -14,14 +17,16 @@ interface PasswordItemProps {
 }
 
 const PasswordItem = ({ password, category }: PasswordItemProps) => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch: CustomThunkDispatch = useDispatch();
+  const user: User | undefined = useSelector((state: RootState) => state.auth.user);
   const link = `/password/${password.id}`;
   const heading = capitalize(password.application);
   const date = formatDate(password.createdAt as unknown as string);
 
   const deleteHandler = () => {
-    dispatch(deletePassword({ id: password.id }));
+    dispatch(removePassword({ id: password.id! }));
+    dispatch(deletePassword(password, user!));
     navigate("/", { replace: true });
   };
 

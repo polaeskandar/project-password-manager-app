@@ -1,55 +1,64 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import classes from "./CategoryItem.module.css";
+import User from "../../Classes/User";
 import Password from "../../Classes/Password";
 import Category from "../../Classes/Category";
-import { RootState } from "../../Store";
 import { capitalize } from "../../Helpers/strings";
 import { formatDate } from "../../Helpers/date";
-import { deleteCategory, renameCategory, editCategoryDescription } from "../../Store/category";
+import { CustomThunkDispatch, RootState } from "../../Store";
+import { removeCategory, renameCategory, editCategoryDescription } from "../../Store/category";
+import { deleteCategory, editCategory } from "../../Store/actions/category";
 
 type CategoryProps = {
   category: Category;
 };
 
 const CategoryItem = ({ category }: CategoryProps) => {
-  const dispatch = useDispatch();
-
+  const dispatch: CustomThunkDispatch = useDispatch();
+  const user: User | undefined = useSelector((state: RootState) => state.auth.user);
   const [categoryName, setCategoryName] = useState(category.name);
   const [categoryDescription, setCategoryDescription] = useState(category.description);
   const [showPasswords, setShowPasswords] = useState(false);
   const [changedData, setChangedData] = useState(false);
   const [canEdit, setCanEdit] = useState(false);
-
-  const authenticatedUser = useSelector((state: RootState) => state.auth.user);
-  const passwordsList: Array<Password> = useSelector((state: RootState) => state.passwords.passwords.filter((password) => password.userId === authenticatedUser?.id));
+  const passwordsList: Array<Password> = useSelector((state: RootState) => state.passwords.passwords);
   const assignedPasswords = passwordsList.filter((password) => password.categoryId === category.id);
+
+  useEffect(() => {
+    dispatch(renameCategory({ id: category.id!, newName: categoryName }));
+  }, [categoryName, category.id, dispatch]);
+
+  useEffect(() => {
+    dispatch(editCategoryDescription({ id: category.id!, newDescription: categoryDescription }));
+  }, [categoryDescription, category.id, dispatch]);
+
+  useEffect(() => {
+    if (changedData) {
+      setChangedData(false);
+      dispatch(editCategory({ id: category.id, name: categoryName, description: categoryDescription, userId: category.userId }, user!.token));
+    }
+  }, [category.id, category.userId, categoryDescription, categoryName, changedData, dispatch, user]);
 
   const deleteHandler = () => {
     setChangedData(true);
-    dispatch(deleteCategory({ id: category.id! }));
+    dispatch(removeCategory({ id: category.id! }));
+    dispatch(deleteCategory(category, user!));
   };
 
   const nameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setChangedData(true);
     setCategoryName(event.target.value);
-    dispatch(renameCategory({ id: category.id!, newName: categoryName }));
   };
 
   const descriptionChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setChangedData(true);
     setCategoryDescription(event.target.value);
-    dispatch(editCategoryDescription({ id: category.id!, newDescription: categoryDescription }));
   };
 
   const clickHandler = () => {
-    if (changedData) {
-      console.log("Sending some sort of request...");
-      setChangedData(false);
-    }
-
     setCanEdit(!canEdit);
   };
 

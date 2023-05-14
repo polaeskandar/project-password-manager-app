@@ -1,5 +1,13 @@
 import { randomUUID } from "crypto";
 
+interface CategoryConstructorParams {
+  readonly id?: string;
+  name: string;
+  description: string;
+  userId: string;
+  createdAt?: Date;
+}
+
 class Category {
   readonly id?: string;
   name: string;
@@ -7,12 +15,12 @@ class Category {
   userId: string;
   createdAt?: Date;
 
-  constructor(name: string, description: string, userId: string) {
-    this.id = randomUUID();
-    this.name = name;
-    this.description = description;
-    this.userId = userId;
-    this.createdAt = new Date();
+  constructor(params: CategoryConstructorParams) {
+    this.id = params.id ?? randomUUID();
+    this.name = params.name;
+    this.description = params.description;
+    this.userId = params.userId;
+    this.createdAt = params.createdAt ?? new Date();
   }
 }
 

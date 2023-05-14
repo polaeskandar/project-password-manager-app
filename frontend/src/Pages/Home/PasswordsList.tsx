@@ -7,6 +7,7 @@ import classes from "./PasswordsList.module.css";
 import Password from "../../Classes/Password";
 import Category from "../../Classes/Category";
 import PasswordItem from "./PasswordItem";
+import { encode } from "base-64";
 
 const PasswordsList = () => {
   const authenticatedUser = useSelector((state: RootState) => state.auth.user);

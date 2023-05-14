@@ -5,7 +5,10 @@ import { addToDatabase, checkEntryExistence, getDatabase, setDatabase } from "..
 import Password from "../Models/Password";
 
 const checkPasswordExistence = (app: string, userId: string): Password | undefined => {
-  return checkEntryExistence(Databases.USERS, (password: Password) => password.application === app && password.userId === userId);
+  return checkEntryExistence(
+    Databases.USERS,
+    (password: Password) => password.application === app && password.userId === userId
+  );
 };
 
 export const getPasswords = (req: Request, res: Response) => {
@@ -26,7 +29,14 @@ export const createPasswords = (req: Request, res: Response) => {
     return res.status(400).send({ msg: "Password already exists for the user." });
   }
 
-  const newPassword = new Password({ username, application, password, description, categoryId: category_id, userId: user_id });
+  const newPassword = new Password({
+    username,
+    application,
+    password,
+    description,
+    categoryId: category_id,
+    userId: user_id,
+  });
   addToDatabase(Databases.PASSWORDS, newPassword);
 
   res.status(201).send({
@@ -40,7 +50,9 @@ export const editPasswords = (req: Request, res: Response) => {
   const { application, username, password, description, category_id, user_id } = req.body;
 
   let allPasswords: Array<Password> = getDatabase(Databases.PASSWORDS);
-  const shouldBeEdited: Password | undefined = allPasswords.find((password) => password.id === id && password.userId === user_id);
+  const shouldBeEdited: Password | undefined = allPasswords.find(
+    (password) => password.id === id && password.userId === user_id
+  );
   if (!shouldBeEdited) return res.status(404).send({ msg: "Password not found!" });
 
   allPasswords = allPasswords.map((passwordItem) => {
@@ -65,14 +77,19 @@ export const editPasswords = (req: Request, res: Response) => {
 
 export const deletePasswords = (req: Request, res: Response) => {
   const { id } = req.params;
-  const { user_id } = req.body;
+  const user_id = req.body.user_id || req.headers["x-user-id"];
 
   let allPasswords: Array<Password> = getDatabase(Databases.PASSWORDS);
-  const shouldBeDeleted: Password | undefined = allPasswords.find((password) => password.id === id && password.userId === user_id);
+  const shouldBeDeleted: Password | undefined = allPasswords.find(
+    (password) => password.id === id && password.userId === user_id
+  );
+
   if (!shouldBeDeleted) return res.status(404).send({ msg: "Password not found!" });
 
-  allPasswords = allPasswords.filter((password) => password.id !== id && password.userId !== user_id);
-  setDatabase(Databases.PASSWORDS, allPasswords);
+  allPasswords = allPasswords.filter(
+    (password) => password.userId !== user_id || (password.userId === user_id && password.id !== id)
+  );
 
+  setDatabase(Databases.PASSWORDS, allPasswords);
   res.status(204).send({});
 };

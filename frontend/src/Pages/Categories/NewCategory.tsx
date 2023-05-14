@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, MouseEvent } from "react";
+import { useState, ChangeEvent, MouseEvent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -32,10 +32,14 @@ const AddNewCategory = () => {
     navigate("..");
   };
 
+  const closeHandler = () => {
+    navigate("..");
+  };
+
   return (
     <form className="card mb-3">
       <div className="card-body position-relative">
-        <i className={`${classes["close-icon"]} fa-solid fa-xmark position-absolute text-secondary`}></i>
+        <i className={`${classes["close-icon"]} fa-solid fa-xmark position-absolute text-secondary`} onClick={closeHandler}></i>
         <div className="mb-3">
           <label htmlFor="category-title-new" className="form-label">
             Category Title

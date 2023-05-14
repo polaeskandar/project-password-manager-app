@@ -2,10 +2,10 @@ import { useState, FormEvent, ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { encode } from "base-64";
 
-import { RootState } from "../../Store";
+import { CustomThunkDispatch, RootState } from "../../Store";
+import { createPassword } from "../../Store/actions/password";
 import { capitalize } from "../../Helpers/strings";
 import User from "../../Classes/User";
-import { newPassword } from "../../Store/password";
 
 const NewPassword = () => {
   const [enteredUsername, setEnteredUsername] = useState<string>("");
@@ -15,8 +15,7 @@ const NewPassword = () => {
   const [enteredDescription, setEnteredDescription] = useState<string>("This password is for ...");
 
   const user: User | undefined = useSelector((state: RootState) => state.auth.user);
-  const dispatch = useDispatch();
-  const passwords = useSelector((state: RootState) => state.passwords.passwords.filter((password) => password.userId === user?.id));
+  const dispatch: CustomThunkDispatch = useDispatch();
   const categories = useSelector((state: RootState) => state.categories.categories.filter((category) => category.userId === user?.id));
 
   const changeUsernameHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -42,16 +41,17 @@ const NewPassword = () => {
   const submitHandler = (event: FormEvent) => {
     event.preventDefault();
     dispatch(
-      newPassword({
-        id: passwords[passwords.length - 1].id + 1,
-        userName: enteredUsername,
-        encryptedPassword: encode(enteredPassword),
-        application: enteredApplication,
-        categoryId: enteredCategory,
-        description: enteredDescription,
-        createdAt: new Date(),
-        userId: user!.id,
-      })
+      createPassword(
+        {
+          username: enteredUsername,
+          password: encode(enteredPassword),
+          application: enteredApplication,
+          categoryId: enteredCategory,
+          description: enteredDescription,
+          userId: user!.id,
+        },
+        user!.token
+      )
     );
 
     setEnteredUsername("");

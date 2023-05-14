@@ -3,20 +3,19 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { decode } from "base-64";
 
-import User from "../../Classes/User";
 import classes from "./PasswordDetails.module.css";
-import { RootState } from "../../Store";
 import { capitalize } from "../../Helpers/strings";
+import { CustomThunkDispatch, RootState } from "../../Store";
 import { changeUserName, changePassword, changeApplication, changeCategory, changeDescription } from "../../Store/password";
+import { editPassword } from "../../Store/actions/password";
+import User from "../../Classes/User";
 
 const PasswordDetails = () => {
   const { id } = useParams();
-
-  const dispatch = useDispatch();
+  const dispatch: CustomThunkDispatch = useDispatch();
   const user: User | undefined = useSelector((state: RootState) => state.auth.user);
   const password = useSelector((state: RootState) => state.passwords.passwords.find((password) => password.id === id));
-  const categories = useSelector((state: RootState) => state.categories.categories.filter((category) => category.userId === user?.id));
-
+  const categories = useSelector((state: RootState) => state.categories.categories);
   const [showPassword, setShowPassword] = useState(false);
   const [changedData, setChangedData] = useState(false);
   const [canEdit, setCanEdit] = useState(false);
@@ -39,27 +38,27 @@ const PasswordDetails = () => {
 
   const usernameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setChangedData(true);
-    dispatch(changeUserName({ id: password.id, newUserName: event.target.value }));
+    dispatch(changeUserName({ id: password.id!, newUserName: event.target.value }));
   };
 
   const passwordChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setChangedData(true);
-    dispatch(changePassword({ id: password.id, newPassword: event.target.value }));
+    dispatch(changePassword({ id: password.id!, newPassword: event.target.value }));
   };
 
   const applicationChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setChangedData(true);
-    dispatch(changeApplication({ id: password.id, newApplication: event.target.value }));
+    dispatch(changeApplication({ id: password.id!, newApplication: event.target.value }));
   };
 
   const categoryChangeHandler = (event: ChangeEvent<HTMLSelectElement>) => {
     setChangedData(true);
-    dispatch(changeCategory({ id: password.id, newCategory: event.target.value }));
+    dispatch(changeCategory({ id: password.id!, newCategory: event.target.value }));
   };
 
   const descriptionChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setChangedData(true);
-    dispatch(changeDescription({ id: password.id, newDescription: event.target.value }));
+    dispatch(changeDescription({ id: password.id!, newDescription: event.target.value }));
   };
 
   const togglePasswordHandler = () => {
@@ -68,7 +67,7 @@ const PasswordDetails = () => {
 
   const clickHandler = () => {
     if (changedData) {
-      console.log("Sending some request...");
+      dispatch(editPassword(password, user!.token));
       setChangedData(false);
     }
 
@@ -84,13 +83,13 @@ const PasswordDetails = () => {
             <label htmlFor="username" className="form-label">
               Username
             </label>
-            <input type="text" className="form-control" id="username" disabled={!canEdit} value={password.userName} onChange={usernameChangeHandler} />
+            <input type="text" className="form-control" id="username" disabled={!canEdit} value={password.username} onChange={usernameChangeHandler} />
           </div>
           <div className="mb-3 position-relative">
             <label htmlFor="password" className="form-label">
               Password
             </label>
-            <input type={!showPassword ? "password" : "text"} className="form-control" id="password" disabled={!canEdit} value={decode(password.encryptedPassword)} onChange={passwordChangeHandler} />
+            <input type={!showPassword ? "password" : "text"} className="form-control" id="password" disabled={!canEdit} value={decode(password.password)} onChange={passwordChangeHandler} />
             <i className={`fa-solid fa-eye${showPassword ? "-slash" : ""} text-secondary ${classes["password-view-icon"]}`} onClick={togglePasswordHandler}></i>
           </div>
           <div className="mb-3">

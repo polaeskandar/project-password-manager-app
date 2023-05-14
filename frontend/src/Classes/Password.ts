@@ -1,22 +1,35 @@
-class Password {
-  readonly id: string;
-  categoryId: string;
+import { randomUUID } from "crypto";
+
+interface PasswordConstructorParams {
+  readonly id?: string;
   application: string;
   description: string;
-  userName: string;
-  encryptedPassword: string;
+  username: string;
+  password: string;
   userId: string;
-  createdAt: Date;
+  categoryId: string;
+  createdAt?: Date;
+}
 
-  constructor(id: string, categoryId: string, application: string, description: string, userName: string, encryptedPassword: string, userId: string, createdAt: Date) {
-    this.id = id;
-    this.categoryId = categoryId;
-    this.application = application;
-    this.description = description;
-    this.userName = userName;
-    this.encryptedPassword = encryptedPassword;
-    this.userId = userId;
-    this.createdAt = createdAt;
+class Password {
+  readonly id?: string;
+  application: string;
+  description: string;
+  username: string;
+  password: string;
+  userId: string;
+  categoryId: string;
+  createdAt?: Date;
+
+  constructor(params: PasswordConstructorParams) {
+    this.id = params.id ?? randomUUID();
+    this.application = params.application;
+    this.description = params.description;
+    this.username = params.username;
+    this.password = params.password;
+    this.userId = params.userId;
+    this.categoryId = params.categoryId;
+    this.createdAt = params.createdAt ?? new Date();
   }
 }
 

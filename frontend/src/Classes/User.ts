@@ -1,12 +1,18 @@
+interface UserConstructorParams {
+  readonly id: string;
+  username: string;
+  token: string;
+}
+
 class User {
   readonly id;
   username: string;
   token: string;
 
-  constructor(id: string, username: string, token: string) {
-    this.id = id;
-    this.username = username;
-    this.token = token;
+  constructor(params: UserConstructorParams) {
+    this.id = params.id;
+    this.username = params.username;
+    this.token = params.token;
   }
 }
 

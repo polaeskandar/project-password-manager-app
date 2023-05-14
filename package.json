@@ -4,7 +4,9 @@
   "description": "![App Screenshot](./screenshots/001.png)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install": "cd frontend && npm install && cd ../backend && npm install && cd ..",
+    "frontend:start": "cd frontend && npm run start",
+    "backend:start": "cd backend && npm run dev"
   },
   "keywords": [],
   "author": "",

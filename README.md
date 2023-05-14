@@ -19,8 +19,8 @@
 You set up and view the project in just 3 steps.
 
 1) Run `npm install` to install dependencies for both backend and frontend.
-2) Run `npm frontend:run` to run the frontend application.
-3) Run `npm backend:run` to run the backend application.
+2) Run `npm frontend:start` to run the frontend application.
+3) Run `npm backend:start` to run the backend application.
 
 if everything goes alright, you should be able to view the frontend application on this link: `http://localhost:3000/` and the backend can be tested using postman client on this link: `http://localhost:8000/`
 
@@ -35,17 +35,17 @@ For more details on how to use these endpoints, please import this file: `Passwo
 - `POST /user/register` To register a new user.
 
 ### Categories
-- `GET /category` To get all categories for a specific user.
-- `POST /category` To create a new category for a specific user.
-- `PATCH /category/:id` To edit an existing category for a specific user.
-- `DELETE /category/:id` To delete an existing category for a specific user.
+- `GET /categories/:id` To get all categories for a specific user.
+- `POST /categories` To create a new category for a specific user.
+- `PATCH /categories/:id` To edit an existing category for a specific user.
+- `DELETE /categories/:id` To delete an existing category for a specific user.
 
 ### Passwords
 
-- `GET /password` To get all passwords for a specific user.
-- `POST /password` To create a new password for a specific user.
-- `PATCH /password/:id` To edit an existing password for a specific user.
-- `DELETE /password/:id` To delete an existing password for a specific user.
+- `GET /passwords/:id` To get all passwords for a specific user.
+- `POST /passwords` To create a new password for a specific user.
+- `PATCH /passwords/:id` To edit an existing password for a specific user.
+- `DELETE /passwords/:id` To delete an existing password for a specific user.
 
 ---
 
