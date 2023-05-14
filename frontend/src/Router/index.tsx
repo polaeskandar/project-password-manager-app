@@ -8,6 +8,7 @@ import PasswordDetails from "../Pages/Home/PasswordDetails";
 import NewPassword from "../Pages/Home/NewPassword";
 import Uncategorized from "../Pages/Categories/Uncategorized";
 import NewCategory from "../Pages/Categories/NewCategory";
+import { authLoader } from "./authLoader";
 
 const router = createBrowserRouter([
   {
@@ -19,12 +20,29 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />,
         children: [
-          { path: "/password/:id", element: <PasswordDetails /> },
-          { path: "/password/new", element: <NewPassword /> },
+          {
+            path: "/password/:id",
+            element: <PasswordDetails />,
+            loader: authLoader,
+          },
+          {
+            path: "/password/new",
+            element: <NewPassword />,
+            loader: authLoader,
+          },
         ],
       },
-      { path: "/categories", element: <Categories />, children: [{ path: "/categories/new", element: <NewCategory /> }] },
-      { path: "/uncategorized", element: <Uncategorized /> },
+      {
+        path: "/categories",
+        element: <Categories />,
+        loader: authLoader,
+        children: [{ path: "/categories/new", element: <NewCategory /> }],
+      },
+      {
+        path: "/uncategorized",
+        element: <Uncategorized />,
+        loader: authLoader,
+      },
     ],
   },
 ]);
