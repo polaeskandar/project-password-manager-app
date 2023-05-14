@@ -19,7 +19,10 @@ export const login = (req: Request, res: Response) => {
   const user: User | undefined = checkUserExistence(username);
 
   if (!user) return res.status(404).send({ msg: "User not found!" });
-  if (!decode(user.password) === password) {
+
+  // console.log(decode(user.password), password);
+
+  if (decode(user.password) !== password) {
     return res.status(400).send({ msg: "Wrong password!" });
   }
 

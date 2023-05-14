@@ -1,4 +1,4 @@
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { RootState } from "../../Store";
@@ -6,11 +6,13 @@ import User from "../../Classes/User";
 import { logout } from "../../Store/auth";
 
 const MainNavigation = () => {
+  const navigate = useNavigate();
   const user: User | undefined = useSelector((state: RootState) => state.auth.user);
   const dispatch = useDispatch();
 
   const logoutHandler = () => {
     dispatch(logout());
+    navigate("/");
   };
 
   return (

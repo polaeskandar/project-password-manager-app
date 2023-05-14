@@ -1,13 +1,15 @@
 import { useState, ChangeEvent, FormEvent, MouseEvent } from "react";
 import { useDispatch } from "react-redux";
 
-import { login, register } from "../../Store/auth";
+import { CustomThunkDispatch } from "../../Store";
+import { authAction } from "../../Store/actions/auth";
 
 const Auth = () => {
-  const [mode, setMode] = useState<String>("login");
+  const [mode, setMode] = useState<string>("login");
   const [enteredUsername, setEnteredUsername] = useState<string>("");
   const [enteredPassword, setEnteredPassword] = useState<string>("");
-  const dispatch = useDispatch();
+  const [enteredPasswordConfirmation, setEnteredPasswordConfirmation] = useState<string>("");
+  const dispatch: CustomThunkDispatch = useDispatch();
 
   const changeUsernameHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setEnteredUsername(event.target.value);
@@ -15,6 +17,10 @@ const Auth = () => {
 
   const changePasswordHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setEnteredPassword(event.target.value);
+  };
+
+  const changePasswordConfirmationHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setEnteredPasswordConfirmation(event.target.value);
   };
 
   const changeModeHandler = (event: MouseEvent) => {
@@ -26,9 +32,9 @@ const Auth = () => {
     event.preventDefault();
 
     if (mode === "login") {
-      dispatch(login({ id: "1", username: enteredUsername, token: "some-token" }));
+      dispatch(authAction({ id: "", username: enteredUsername, password: enteredPassword, token: "" }, mode));
     } else {
-      dispatch(register({ id: "1", username: enteredUsername, token: "some-token" }));
+      if (enteredPassword === enteredPasswordConfirmation) dispatch(authAction({ id: "", username: enteredUsername, password: enteredPassword, token: "" }, mode));
     }
   };
 
@@ -36,6 +42,7 @@ const Auth = () => {
   const changeModeBtnText = mode === "login" ? "Don't have an account? create one here!" : "Login to an existing account here!";
   const usernamePlaceholder = mode === "login" ? "Enter your username..." : "Choose a new username...";
   const passwordPlaceholder = mode === "login" ? "Enter your password..." : "Choose a new password...";
+  const btnText = mode === "login" ? "Login" : "Register";
 
   return (
     <div className="card mb-3 w-75 me-auto ms-auto mt-5">
@@ -59,14 +66,21 @@ const Auth = () => {
               <label htmlFor="password-confirmation-auth" className="form-label">
                 Password Confirmation
               </label>
-              <input type="password" className="form-control" id="password-confirmation-auth" placeholder="Enter password confirmation..." />
+              <input
+                type="password"
+                className="form-control"
+                id="password-confirmation-auth"
+                value={enteredPasswordConfirmation}
+                onChange={changePasswordConfirmationHandler}
+                placeholder="Enter password confirmation..."
+              />
             </div>
           )}
           <button onClick={changeModeHandler} className="btn text-primary mb-3 w-100">
             {changeModeBtnText}
           </button>
           <button type="submit" className="btn btn-dark w-100">
-            <i className="fa-solid fa-right-to-bracket me-1"></i> Login
+            <i className="fa-solid fa-right-to-bracket me-1"></i> {btnText}
           </button>
         </form>
       </div>

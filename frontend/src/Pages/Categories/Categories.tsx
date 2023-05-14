@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
 
@@ -6,8 +7,12 @@ import CategoryItem from "./CategoryItem";
 import { RootState } from "../../Store";
 
 const Categories = () => {
-  const categories = useSelector((state: RootState) => state.categories.categories);
+  let categories = useSelector((state: RootState) => state.categories.categories);
   const renderedCategories = categories.map((category) => <CategoryItem category={category} key={category.id} />);
+
+  useEffect(() => {
+    return () => {};
+  }, []);
 
   return (
     <div className="p-5">

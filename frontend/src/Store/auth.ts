@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { Dispatch, PayloadAction } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
 
 import User from "../Classes/User";
 
@@ -15,11 +15,7 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    login(state, action: PayloadAction<User>) {
-      state.user = action.payload;
-      localStorage.setItem("user", JSON.stringify(action.payload));
-    },
-    register(state, action: PayloadAction<User>) {
+    auth(state, action: PayloadAction<User>) {
       state.user = action.payload;
       localStorage.setItem("user", JSON.stringify(action.payload));
     },
@@ -30,5 +26,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { login, register, logout } = authSlice.actions;
+export const { auth, logout } = authSlice.actions;
 export default authSlice.reducer;
